@@ -16,7 +16,7 @@
 	$target_dir = "uploads/";
 	$file_name_before = basename($_FILES["takePictureFieldBefore"]["name"]);
 
-	$target_file_before = $target_dir . $file_name_before;
+	$target_file_before = $target_dir . date('Y-m-d_H:i:s_') . $file_name_before ;
 
 	$uploadOk = 1;
 	$imageFileType_before = pathinfo($target_file_before, PATHINFO_EXTENSION);
