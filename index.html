@@ -48,8 +48,7 @@
 					<div class="span12">
 						<input type="button" class="btn" id="take_picture_before" value="Before Volume" />
 					 	<div style="display: none;">
-							#<input type="file" capture="camera" accept="image/*" id="takePictureFieldBefore" name="takePictureFieldBefore">
-							<input type="file"  accept="image/*" capture id="takePictureFieldBefore" name="takePictureFieldBefore">
+							<input type="file" capture="camera" accept="image/*" id="takePictureFieldBefore" name="takePictureFieldBefore">
 						</div>
 
 						<img id="beforeVolume" name="beforeVolume" class="thumbnail"> <br/>
@@ -81,7 +80,6 @@
 				console.log('onReady');
 				$("#noticeBrowser").hide();
 				$("#takePictureFieldBefore").on("change", gotPicBefore);
-				$("#takePictureFieldAfter").on("change", gotPicAfter);
 				desiredWidth = window.innerWidth;
 
 				if(!("url" in window) && ("webkitURL" in window)) 
@@ -91,10 +89,6 @@
 
 				$("#take_picture_before").on("click", function() {
 					$("#takePictureFieldBefore").click();
-				});
-
-				$("#take_picture_after").on("click", function() {
-					$("#takePictureFieldAfter").click();
 				});
 
 				// do browser detection that depends jquery-migrate-1.2.1.js
@@ -115,18 +109,6 @@
 				}
 			} 
 
-			function gotPicAfter(event) 
-			{
-				var imageURI = event.target.files[0];
-				var imageFileSize = imageURI.size / 1024;
-
-				if(event.target.files.length == 1 && event.target.files[0].type.indexOf("image/") == 0)
-				{
-					$("#afterVolume").attr("src", URL.createObjectURL(imageURI));
-					$("#picAfterize").html(imageFileSize);
-				}
-			}
- 
 			// simple browser detection
 			// modified version from: http://stackoverflow.com/a/27593326 by maja
 			function getBrowserVersion()
