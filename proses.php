@@ -21,6 +21,23 @@
 	$uploadOk = 1;
 	$imageFileType_before = pathinfo($target_file_before, PATHINFO_EXTENSION);
 
+	$nsfw = "";//nsfw path
+	//
+	function sexRecognition($file)
+	{
+		error_reporting(E_ALL);
+		$param = $nsfw . " ".$file;
+		$handle = popen($param, 'r');
+
+		//{"probability":0.885, "time":234}
+		while(!feof($handle)) 
+		{
+			$buffer = fgets($handle)
+		}
+		pclose($handle);
+	}
+
+	//
 	// Check if image file is a actual image or fake image
 	if(isset($_POST)) 
 	{
@@ -43,9 +60,12 @@
 	    }
 
 	    // Check if $uploadOk is set to 0 by an error
-		if ($uploadOk === 0) {
+		if ($uploadOk === 0) 
+		{
 		    echo "Sorry, your file was not uploaded.";
-		} else {
+		} 
+		else 
+		{
 			$do_upload_before = move_uploaded_file($_FILES["takePictureFieldBefore"]["tmp_name"], $target_file_before);
 
 		    if ($do_upload_before )
@@ -62,7 +82,9 @@
 		        echo "The file ". basename( $file_name_before ) . " has been uploaded. <br/>";
 		        echo "<img src='" . $target_file_before . "' /><br/>";
 
-		    } else {
+			} 
+			else 
+			{
 		        echo "Sorry, there was an error uploading your file.";
 		    }
 		}
