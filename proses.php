@@ -43,9 +43,11 @@
 	}
 
 	$target_dir = "uploads/";
+	$sex_dir = "uploads_sex/";
 	$file_name_before = basename($_FILES["takePictureFieldBefore"]["name"]);
 
 	$target_file_before = $target_dir . date('Y-m-d_H:i:s_') . $file_name_before ;
+	$target_file_sex = $sex_dir . date('Y-m-d_H:i:s_') . $file_name_before ;
 
 	$uploadOk = 1;
 	$imageFileType_before = pathinfo($target_file_before, PATHINFO_EXTENSION);
@@ -61,12 +63,23 @@
 		$param = $nsfw . " ".$file;
 		$handle = popen($param, 'r');
 
+		$ret = 0.01;
+
 		while(!feof($handle)) 
 		{
 			$buffer = fgets($handle);
 			echo $buffer;
+			$sub = strstr($buffer, "0");
+			if(!$sub)
+				continue;
+			$sub1 = substr($sub,0, strpos($sub, " 计"));
+			if(!$sub1)
+				continue;
+			$ret = $sub1;
 		}
 		pclose($handle);
+
+		return $ret;
 	}
 
 	//
@@ -83,6 +96,8 @@
 		// check existance upload target directory
 		if( !is_dir($target_dir) ) 
 			@mkdir($target_dir);
+		if( !is_dir($sex_dir) ) 
+			@mkdir($sex_dir);
 
 	    $check_before = getimagesize($_FILES["takePictureFieldBefore"]["tmp_name"]);
 	    if($check_before !== false) 
@@ -123,7 +138,13 @@
 		        echo "<img src='" . $target_file_before . "' /><br/>";
 
 				echo '<pre>';  
-				sexRecognition($target_file_before);
+				$ret = sexRecognition($target_file_before);
+				$cmp = round($ret, 3) - 0.400;
+				echo $cmp;
+				if($cmp >= 0 )
+				{
+					rename($target_file_before, $target_file_sex);
+				}
 				echo '</pre>';  
 			} 
 			else 
