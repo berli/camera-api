@@ -12,7 +12,36 @@
 	 * - IPTC.php | Copyright (C) 2004, 2005  Martin Geisler. | Code licensed under GPL v2
 	 */
 
-	include 'IPTC.php';
+    include 'IPTC.php';
+    include 'Log/Log.php';
+    include 'qqwry-php/qqwry.php';
+
+    function getIP() /*获取客户端IP*/  
+    {  
+		if (@$_SERVER["HTTP_X_FORWARDED_FOR"])  
+			$ip = $_SERVER["HTTP_X_FORWARDED_FOR"];  
+        else if (@$_SERVER["HTTP_CLIENT_IP"])  
+    	   	$ip = $_SERVER["HTTP_CLIENT_IP"];  
+        else if (@$_SERVER["REMOTE_ADDR"])  
+    		$ip = $_SERVER["REMOTE_ADDR"];  
+        else if (@getenv("HTTP_X_FORWARDED_FOR"))  
+    		$ip = getenv("HTTP_X_FORWARDED_FOR");  
+        else if (@getenv("HTTP_CLIENT_IP"))  
+    		$ip = getenv("HTTP_CLIENT_IP");  
+        else if (@getenv("REMOTE_ADDR"))  
+    		$ip = getenv("REMOTE_ADDR");  
+        else  
+    		$ip = "Unknown";  
+    	
+    	return $ip;  
+	}
+
+	function getLocation($ip)
+	{
+		$lo = new qqwry("/home/u/hello/qqwry.dat");
+		return $lo->query($ip);
+	}
+
 	$target_dir = "uploads/";
 	$file_name_before = basename($_FILES["takePictureFieldBefore"]["name"]);
 
@@ -21,18 +50,21 @@
 	$uploadOk = 1;
 	$imageFileType_before = pathinfo($target_file_before, PATHINFO_EXTENSION);
 
-	$nsfw = "";//nsfw path
 	//
 	function sexRecognition($file)
 	{
+	    $nsfw = "/home/u/nsfw/nsfw";//nsfw path
+	    $tag_prob = "probability:";
+		$tag_time = "time:";
+
 		error_reporting(E_ALL);
 		$param = $nsfw . " ".$file;
 		$handle = popen($param, 'r');
 
-		//{"probability":0.885, "time":234}
 		while(!feof($handle)) 
 		{
-			$buffer = fgets($handle)
+			$buffer = fgets($handle);
+			echo $buffer;
 		}
 		pclose($handle);
 	}
@@ -41,8 +73,16 @@
 	// Check if image file is a actual image or fake image
 	if(isset($_POST)) 
 	{
+		$conf = array('mode' => 0600, 'timeFormat' => '%X %x');
+		$logger = Log::factory('file', '/var/www/html/cam/out.log', 'SEX CHECK');
+		$ip = getIP();
+		$lo = getLocation($ip);
+		$loutf8 = iconv("UTF-8", "GB2312//IGNORE", $lo[0].$lo[1]);
+		$logger->log( $ip.'|'.$loutf8);
+
 		// check existance upload target directory
-		if( !is_dir($target_dir) ) @mkdir($target_dir);
+		if( !is_dir($target_dir) ) 
+			@mkdir($target_dir);
 
 	    $check_before = getimagesize($_FILES["takePictureFieldBefore"]["tmp_name"]);
 	    if($check_before !== false) 
@@ -82,6 +122,9 @@
 		        echo "The file ". basename( $file_name_before ) . " has been uploaded. <br/>";
 		        echo "<img src='" . $target_file_before . "' /><br/>";
 
+				echo '<pre>';  
+				sexRecognition($target_file_before);
+				echo '</pre>';  
 			} 
 			else 
 			{

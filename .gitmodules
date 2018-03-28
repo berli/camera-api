@@ -1,0 +1,3 @@
+[submodule "qqwry-php"]
+	path = qqwry-php
+	url = https://github.com/berli/qqwry-php.git
