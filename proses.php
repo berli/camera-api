@@ -135,7 +135,6 @@
 		    	$objIPTC_before->setValue(IPTC_SOURCE, "IPTC_SOURCE");
 
 		        echo "The file ". basename( $file_name_before ) . " has been uploaded. <br/>";
-		        echo "<img src='" . $target_file_before . "' /><br/>";
 
 				echo '<pre>';  
 				$ret = sexRecognition($target_file_before);
@@ -146,6 +145,8 @@
 					rename($target_file_before, $target_file_sex);
 				}
 				echo '</pre>';  
+				
+				echo "<img src='" . $target_file_before . "' /><br/>";
 			} 
 			else 
 			{

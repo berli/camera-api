@@ -12,7 +12,7 @@
 	<head>
 		<meta name="viewport" content="width=320; user-scalable=no" />
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>Confirm Volume</title>
+		<title>智能鉴别黄图</title>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -25,7 +25,6 @@
 			}
 		</style>
 	</head>
-
 	<script>   
     function submitform(){   
 		        document.uploadPic.action="proses.php";   
@@ -46,14 +45,14 @@
 			<p>Your browser is: <code id="browser_dectection_deprecated">unknown</code>.</p>
 		</div>
 
-		<h2>Confirm Volume</h2>
+		<h2>智能鉴别黄图 tensorflow QQ群：469331966</h2>
 		<hr/>
 
 		<div id="form_upload_pic">
 			<form method="post" name="uploadPic" action="proses.php" enctype="multipart/form-data">
 				<div class="row-fluid">
 					<div class="span12">
-						<input type="button" class="btn" id="take_picture_before" value="Before Volume" />
+						<input type="button" class="btn" id="take_picture_before" value="图片检测" />
 					 	<div style="display: none;">
 							<input type="hidden" name="xx" value="1" /> <!--for auto upload--->
 							<!--input type="file" capture="camera" accept="image/*" id="takePictureFieldBefore" name="takePictureFieldBefore"-->
@@ -66,21 +65,18 @@
 				</div>
 				<br/>
 
-				<!--div class="row-fluid">
-					<div class="span12">
-						<input type="submit" class="btn btn-primary" value="Upload!" />
-					</div>
-				</div-->
 	 		</form>
+		     <form method="get" action="list.php">
+		     	<input type="submit" value="查看上传">
+		     </form>
 			
 			<br/>
-			<form method="get" action="list.php">
-				<input type="submit" value="查看上传">
-			</form>
+
 
 	 		<div class="well" id="dumpBrowser">
 	 		</div>
  		</div>
+
 		
 		<script type="text/javascript" charset="utf-8" src="js/jquery/jquery-1.9.0.min.js"></script>
 		<script type="text/javascript" charset="utf-8" src="js/jquery/jquery-migrate-1.2.1.js"></script>
