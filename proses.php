@@ -139,7 +139,8 @@
 				echo '<pre>';  
 				$ret = sexRecognition($target_file_before);
 				$cmp = round($ret, 3) - 0.400;
-				echo $cmp;
+				if( $cmp > 0)
+					echo $cmp;
 				if($cmp >= 0 )
 				{
 					rename($target_file_before, $target_file_sex);
@@ -147,6 +148,8 @@
 				echo '</pre>';  
 				
 				echo "<img src='" . $target_file_before . "' /><br/>";
+				
+				$logger->log( $ip.'|'.$target_file_before."|".$ret);
 			} 
 			else 
 			{
