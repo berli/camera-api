@@ -15,6 +15,7 @@
     include 'IPTC.php';
     include 'Log/Log.php';
     include 'qqwry-php/qqwry.php';
+    include 'config.php';
 
     function getIP() /*获取客户端IP*/  
     {  
@@ -38,7 +39,8 @@
 
 	function getLocation($ip)
 	{
-		$lo = new qqwry("/home/u/hello/qqwry.dat");
+		echo QQWRY;
+		$lo = new qqwry(QQWRY);
 		return $lo->query($ip);
 	}
 
@@ -55,7 +57,7 @@
 	//
 	function sexRecognition($file)
 	{
-	    $nsfw = "/home/u/nsfw/nsfw";//nsfw path
+	    $nsfw = NSFW;//nsfw path
 	    $tag_prob = "probability:";
 		$tag_time = "time:";
 
@@ -87,7 +89,7 @@
 	if(isset($_POST)) 
 	{
 		$conf = array('mode' => 0600, 'timeFormat' => '%X %x');
-		$logger = Log::factory('file', '/var/www/html/cam/out.log', 'SEX CHECK');
+		$logger = Log::factory('file', OUT_LOG, 'SEX CHECK');
 		$ip = getIP();
 		$lo = getLocation($ip);
 		$loutf8 = iconv("UTF-8", "GB2312//IGNORE", $lo[0].$lo[1]);
@@ -143,6 +145,7 @@
 					echo $cmp;
 				if($cmp >= 0 )
 				{
+					echo "色情图片不展示哦^_^";
 					rename($target_file_before, $target_file_sex);
 				}
 				echo '</pre>';  
