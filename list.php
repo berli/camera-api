@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="inc/ins-imgs.css">
 </head>
 <body>
-    <header><div><h1>智能鉴黄图片 Tesorflow QQ群:469331966</h1></div></header>
+    <header><div><h1>智能鉴黄</h1></div></header>
     <!-- images insertion -->
     <?php include "inc/ins-imgs.php"; ?>
     <footer><div>深度学习社区 <a target="_blank" href="https://jq.qq.com/?_wv=1027&k=5fuKSEU">Tesorflow Caffe QQ群:469331966</a></div></footer>
