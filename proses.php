@@ -140,6 +140,9 @@
 					rename($target_file_before, $target_file_sex);
 				}
 				echo '</pre>';  
+		        echo " <form method=\"get\" action=\"list.php\">
+		         	<input type=\"submit\" value=\"美女图片中心\">
+		         </form>";
 				
 				echo "<img src='" . $target_file_before . "' /><br/>";
 				
@@ -148,6 +151,7 @@
 			else 
 			{
 		        echo "Sorry, there was an error uploading your file.";
-		    }
+			}
+
 		}
 	}

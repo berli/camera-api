@@ -35,14 +35,7 @@
 	<body>
 		<div class="alert alert-block">
 			<button type="button" class="close" data-dismiss="alert">&times;</button>
-			<h4>Browser Detection!</h4>
-			<p>Your browser is: <code id="browser_dectection">unknown</code>.</p>
-		</div>
-
-		<div class="alert alert-block" id="noticeBrowser"> 
-			<h4>Unsupported Browser</h4>
-			<p>Dear User, please update your browser to latest version available on market. Recommend browser is: Chrome / Safari / Opera / Firefox.</p>
-			<p>Your browser is: <code id="browser_dectection_deprecated">unknown</code>.</p>
+			<h4>请上传小于2M的图片</h4>
 		</div>
 
 		<!--h2>智能鉴别黄图 tensorflow QQ群：469331966</h2-->
@@ -67,7 +60,7 @@
 
 	 		</form>
 		     <form method="get" action="list.php">
-		     	<input type="submit" value="查看上传">
+		     	<input type="submit" value="美女图片中心">
 		     </form>
 			
 			<br/>
@@ -131,9 +124,11 @@
 
 					if (parseInt(tem[1]) < 11)
 					{
+							/*
 						$("#form_upload_pic").hide();
 						$("#noticeBrowser").show();
 						$("#browser_dectection_deprecated").html("IE " + (tem[1] || ''));
+							*/
 					}
 					return 'IE '+(tem[1] || '');
 				}
@@ -146,10 +141,12 @@
 					{
 						if (parseInt(tem[1]) < 26)
 						{
+							/*
 							// Opera older than version 26, function for upload and confirm is disabled.
 							$("#form_upload_pic").hide();
 							$("#noticeBrowser").show();
 							$("#browser_dectection_deprecated").html("Opera " + tem[1]); 
+							*/
 						}
 						return 'Opera ' + tem[1];
 					}
@@ -162,7 +159,7 @@
 					M.splice(1, 1, tem[1]); 
 				}
 
-				if (M[0] === 'Firefox' && parseInt(M[1]) < 34)
+				/*if (M[0] === 'Firefox' && parseInt(M[1]) < 34)
 				{
 					// firefox older than version 34, function for upload and confirm is disabled.
 					$("#form_upload_pic").hide();
@@ -181,6 +178,7 @@
 
 				$("#browser_dectection_deprecated").html(M.join(' ')); 
 				return M.join(' ');
+				*/
 			}
 		</script>
 	</body>
