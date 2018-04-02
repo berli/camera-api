@@ -12,7 +12,6 @@
 	 * - IPTC.php | Copyright (C) 2004, 2005  Martin Geisler. | Code licensed under GPL v2
 	 */
 
-    include 'IPTC.php';
     include 'Log/Log.php';
     include 'qqwry-php/qqwry.php';
     include 'config.php';
@@ -39,20 +38,21 @@
 
 	function getLocation($ip)
 	{
-		echo QQWRY;
+		//echo QQWRY;
 		$lo = new qqwry(QQWRY);
 		return $lo->query($ip);
 	}
 
 	$target_dir = "uploads/";
 	$sex_dir = "uploads_sex/";
+	$md5_name = md5_file( $_FILES["takePictureFieldBefore"]["tmp_name"] );
 	$file_name_before = basename($_FILES["takePictureFieldBefore"]["name"]);
+	$imageType = strtolower( pathinfo($_FILES["takePictureFieldBefore"]["name"], PATHINFO_EXTENSION));
 
-	$target_file_before = $target_dir . date('Y-m-d_H:i:s_') . $file_name_before ;
-	$target_file_sex = $sex_dir . date('Y-m-d_H:i:s_') . $file_name_before ;
+	$target_file_before = $target_dir . $md5_name.".".$imageType ;
+	$target_file_sex = $sex_dir . $md5_name.".".$imageType ;
 
 	$uploadOk = 1;
-	$imageFileType_before = pathinfo($target_file_before, PATHINFO_EXTENSION);
 
 	//
 	function sexRecognition($file)
@@ -127,15 +127,6 @@
 
 		    if ($do_upload_before )
 		    {
-		    	// write final EXIF TAG
-		    	$objIPTC_before = new IPTC($target_file_before);
-		    	$objIPTC_before->setValue(IPTC_COPYRIGHT_STRING, "A copyright notice");
-		    	$objIPTC_before->setValue(IPTC_CAPTION, "A caption descriptions for this picture [BEFORE]."); 
-		    	$objIPTC_before->setValue(IPTC_FIXTURE_IDENTIFIER, "fixture identifier");
-		    	$objIPTC_before->setValue(IPTC_CREDIT, "IPTC_CREDIT");
-		    	$objIPTC_before->setValue(IPTC_ORIGINATING_PROGRAM, "originating apps");
-		    	$objIPTC_before->setValue(IPTC_SOURCE, "IPTC_SOURCE");
-
 		        echo "The file ". basename( $file_name_before ) . " has been uploaded. <br/>";
 
 				echo '<pre>';  
